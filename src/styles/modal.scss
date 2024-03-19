@@ -1,0 +1,88 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 397px;
+  height: 408px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.titulo-botao {
+  width: 100%;
+  height: 57px;
+  background-color: $color-primary;
+  display: flex;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  flex-direction: row;
+}
+
+.modal-total {
+  display: flex;
+  margin-left: 0.8rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+
+  button {
+    background-color: $color-grey100;
+    color: white;
+    width: 368px;
+    height: 60px;
+    border-radius: 8px;
+  }
+}
+
+.modal-item {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-right: 1rem;
+}
+
+.modal-food {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin: 0.5rem;
+
+  p {
+    color: $color-primary;
+  }
+
+  img {
+    background-color: $color-grey100;
+    width: 5.1406rem;
+    height: 5rem;
+    border-radius: 5px;
+  }
+}
+
+.modal-span {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid $color-grey100;
+  padding-top: 1rem;
+  margin-right: 0.5rem;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo semi-transparente */
+    z-index: 999; /* Certifique-se de que o backdrop fique atrás do modal (z-index menor) */
+  }
