@@ -2,45 +2,31 @@ import { useState, useEffect } from "react";
 import { CartModal } from "../../components/CartModal";
 import { Header } from "../../components/Header";
 import { ProductList } from "../../components/ProductList";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const HomePage = () => {
   const [productList, setProductList] = useState([]);
   const [cartList, setCartList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchDataAndRestoreCart = async () => {
-      try {
-        const response = await fetch(
-          "https://hamburgueria-kenzie-json-serve.herokuapp.com/products"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setProductList(data);
-        } else {
-          throw new Error("Erro ao obter os produtos da API");
-        }
-
-        const savedCartList = JSON.parse(localStorage.getItem("cartList"));
-        if (savedCartList) {
-          setCartList(savedCartList);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataAndRestoreCart();
-  }, []);
-
   const addToCart = (product) => {
-    const updatedCartList = [...cartList, product];
+    const productWithUniqueId = {
+      ...product,
+      uniqueId: `${product.id}-${Date.now()}`,
+    };
+    const updatedCartList = [...cartList, productWithUniqueId];
     setCartList(updatedCartList);
     localStorage.setItem("cartList", JSON.stringify(updatedCartList));
+
+    toast.success(`${product.name} adicionado ao carrinho!`);
   };
 
-  const removeFromCart = (productId) => {
-    const updatedCartList = cartList.filter((item) => item.id !== productId);
+  const removeFromCart = (uniqueId) => {
+    const updatedCartList = cartList.filter(
+      (item) => item.uniqueId !== uniqueId
+    );
     setCartList(updatedCartList);
     localStorage.setItem("cartList", JSON.stringify(updatedCartList));
   };
@@ -60,6 +46,30 @@ export const HomePage = () => {
 
   const cartItemCount = cartList.length;
 
+  useEffect(() => {
+    const fetchDataAndRestoreCart = async () => {
+      try {
+        const response = await axios.get(
+          "https://hamburgueria-kenzie-json-serve.herokuapp.com/products"
+        );
+        setProductList(response.data);
+
+        const savedCartList = JSON.parse(localStorage.getItem("cartList"));
+        if (savedCartList) {
+          setCartList(savedCartList);
+        }
+        const savedIsModalOpen = JSON.parse(
+          localStorage.getItem("isModalOpen")
+        );
+        setIsModalOpen(savedIsModalOpen ?? false);
+      } catch (error) {
+        console.error("Houve um erro ao buscar os dados:", error);
+      }
+    };
+
+    fetchDataAndRestoreCart();
+  }, []);
+
   return (
     <>
       <Header
@@ -68,16 +78,20 @@ export const HomePage = () => {
         cartItemCount={cartItemCount}
         openModal={openModal}
       />
-      <main>
-        <ProductList productList={productList} addToCart={addToCart} />
-        <CartModal
-          cartList={cartList}
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          removeFromCart={removeFromCart}
-          clearCart={clearCart}
-        />
-      </main>
+
+      <div className="centered-container">
+        <main>
+          <ProductList productList={productList} addToCart={addToCart} />
+          <CartModal
+            cartList={cartList}
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            removeFromCart={removeFromCart}
+            clearCart={clearCart}
+          />
+        </main>
+        <ToastContainer />
+      </div>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Logo from "../../assets/Logo.svg";
 import { MdSearch, MdShoppingCart } from "react-icons/md";
-import styles from "./intex.module.scss";
 
 export const Header = ({
   productList,
@@ -22,24 +21,31 @@ export const Header = ({
   };
 
   return (
-    <header className={styles.header}>
-      <img src={Logo} alt="Logo Kenzie Burguer" />
-      <div>
-        <button onClick={openModal}> 
-          <MdShoppingCart size={21} />
-          <span>{cartItemCount}</span>
-        </button>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <button type="submit">
-            <MdSearch size={21} />
-          </button>
-        </form>
-      </div>
-    </header>
+    <>
+      <header className="header">
+        <div className="header-content">
+          <div className="logo-container">
+            <img src={Logo} alt="Logo Kenzie Burguer" />
+          </div>
+
+          <div className="actions-container">
+            <button onClick={openModal}>
+              <MdShoppingCart size={21} />
+              <span>{cartItemCount}</span>
+            </button>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+              <button type="submit">
+                <MdSearch size={21} />
+              </button>
+            </form>
+          </div>
+        </div>
+      </header>
+    </>
   );
 };

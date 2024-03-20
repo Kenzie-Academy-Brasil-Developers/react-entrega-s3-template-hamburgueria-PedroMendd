@@ -1,3 +1,10 @@
+.centered-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
+}
+
 .item-container {
   position: relative;
   border: 2px solid $color-grey0;
@@ -74,26 +81,24 @@
 }
 
 .product-list {
-    margin-top: 1rem;
-    margin-left: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  ul {
     display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding-bottom: 16px;
     flex-wrap: wrap;
-    gap: 2rem;
+    justify-content: flex-start;
+  }
 
-    ul {
-        display: flex;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        padding-bottom: 16px;
-        flex-wrap: wrap; 
-        justify-content: flex-start; 
-    }
-
-   
-
-    @media (max-width: 650px) {
-        flex-wrap: nowrap;
-        overflow-x: auto; 
-    }
+  @media (max-width: 650px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
 }

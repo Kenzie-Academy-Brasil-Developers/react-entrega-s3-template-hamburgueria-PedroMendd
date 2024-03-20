@@ -28,9 +28,9 @@ export const CartModal = ({
               <ul>
                 {cartList.map((product) => (
                   <CartItemCard
-                    key={product.id}
+                    key={product.uniqueId}
                     product={product}
-                    removeFromCart={removeFromCart}
+                    removeFromCart={() => removeFromCart(product.uniqueId)}
                   />
                 ))}
               </ul>
