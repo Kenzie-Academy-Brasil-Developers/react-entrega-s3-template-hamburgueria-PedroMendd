@@ -23,7 +23,7 @@ export const HomePage = () => {
 
       toast.success(`${product.name} adicionado ao carrinho!`);
     } else {
-      alert("Produto já adicionado ao carrinho!");
+      toast.error("Produto já adicionado ao carrinho!");
     }
   };
 
