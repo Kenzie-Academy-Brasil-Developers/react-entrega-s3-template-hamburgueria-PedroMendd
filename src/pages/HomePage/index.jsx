@@ -12,21 +12,23 @@ export const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const addToCart = (product) => {
-    const productWithUniqueId = {
-      ...product,
-      uniqueId: `${product.id}-${Date.now()}`,
-    };
-    const updatedCartList = [...cartList, productWithUniqueId];
-    setCartList(updatedCartList);
-    localStorage.setItem("cartList", JSON.stringify(updatedCartList));
+    const isProductInCart = cartList.find(
+      (cartItem) => cartItem.id === product.id
+    );
 
-    toast.success(`${product.name} adicionado ao carrinho!`);
+    if (!isProductInCart) {
+      const updatedCartList = [...cartList, product];
+      setCartList(updatedCartList);
+      localStorage.setItem("cartList", JSON.stringify(updatedCartList));
+
+      toast.success(`${product.name} adicionado ao carrinho!`);
+    } else {
+      alert("Produto já adicionado ao carrinho!");
+    }
   };
 
-  const removeFromCart = (uniqueId) => {
-    const updatedCartList = cartList.filter(
-      (item) => item.uniqueId !== uniqueId
-    );
+  const removeFromCart = (id) => {
+    const updatedCartList = cartList.filter((item) => item.id !== id);
     setCartList(updatedCartList);
     localStorage.setItem("cartList", JSON.stringify(updatedCartList));
   };
